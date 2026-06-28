@@ -1,65 +1,98 @@
-import Image from "next/image";
-
-export default function Home() {
+// Componente para o background com estética geométrica e colorida
+const GeometricBackground = () => {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="fixed inset-0 bg-black overflow-hidden z-0">
+      {/* Formas geométricas flutuantes */}
+      <div className="absolute top-10 left-10 w-20 h-20 bg-pink-400 transform rotate-45 opacity-80"></div>
+      <div className="absolute top-20 right-20 w-16 h-16 bg-yellow-400 rounded-full opacity-80"></div>
+      <div className="absolute top-40 left-1/3 w-12 h-12 bg-blue-500 opacity-80"></div>
+      <div className="absolute top-60 right-1/4 w-24 h-24 bg-orange-400 transform rotate-12 opacity-80"></div>
+      <div className="absolute bottom-20 left-20 w-18 h-18 bg-purple-400 rounded-full opacity-80"></div>
+      <div className="absolute bottom-40 right-10 w-20 h-20 bg-green-400 transform -rotate-12 opacity-80"></div>
+      
+      {/* Estrelas e elementos decorativos */}
+      <div className="absolute top-1/4 left-1/2 text-pink-500 text-2xl">✦</div>
+      <div className="absolute top-1/2 right-1/4 text-blue-500 text-xl">✦</div>
+      <div className="absolute bottom-1/4 left-1/4 text-yellow-500 text-xl">✦</div>
+      <div className="absolute bottom-1/3 right-1/3 text-orange-500 text-2xl">✦</div>
+      
     </div>
   );
-}
+};
+
+// Componente para o header
+const Header = () => {
+  return (
+    <header className="relative z-20 p-6">
+      <nav className="flex justify-between items-center max-w-6xl mx-auto">
+        <div className="text-2xl font-bold text-blue-500 drop-shadow-lg">
+          SemNome
+        </div>
+        <div className="hidden md:flex space-x-12">
+          {['Início', 'Como Funciona'].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className=" text-blue-200 hover:text-blue-900 transition-colors duration-300 font-medium"
+            >
+              {item}
+            </a>
+          ))}
+        </div>
+        <button className="bg-blue-500 hover:bg-pink-500 text-white px-6 py-2 rounded-lg font-bold transition-all duration-300 transform hover:scale-105">
+          Começar Agora
+        </button>
+      </nav>
+    </header>
+  );
+};
+
+// Componente para a seção hero
+const HeroSection = () => {
+  return (
+    <section className="relative z-10 min-h-screen flex items-center justify-center text-center px-6">
+      <div className="max-w-4xl">
+        <h1 className="text-5xl md:text-7xl font-extrabold text-pink-600 mb-6 drop-shadow-xl">
+          Aprenda o Alfabeto em
+          <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-900">
+            Libras com Aprendizado de Máquina
+          </span>
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-100 mb-8 max-w-2xl mx-auto">
+          Plataforma gamificada com IA e MediaPipe para tornar o aprendizado interativo e envolvente.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button className="bg-blue-500 hover:bg-pink-600 text-white px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105">
+            Experimentar Grátis
+          </button>
+          <button className="hover:bg-pink-900 hover:text-pink-200 hover:border-pink-500 text-blue-600 px-8 py-3 rounded-lg font-bold transition-all duration-300 border-2 border-blue-500">
+            Saiba Mais
+          </button>
+          
+        </div>
+        <p className="text-sm text-gray-500 pt-8">
+          Este jogo irá solicitar o acesso à webcam para extrair as coordenadas da sua mão,<br/>
+          todos os dados são processados localmente e NÃO serão serão armazenados ou enviados !
+        </p>
+      </div>
+      
+      <div className="absolute bottom-10 animate-bounce">
+        <div className="w-8 h-8 bg-blue-500 rounded-full mx-auto"></div>
+      </div>
+    </section>
+  );
+};
+// Componente principal
+const LandingPage = () => {
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-white">
+      <GeometricBackground />
+      <div className="relative z-10">
+        <Header />
+        <HeroSection />
+      </div>
+    </div>
+  );
+};
+
+export default LandingPage;
