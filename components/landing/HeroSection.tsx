@@ -1,8 +1,8 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 export default function HeroSection() {
   return (
-    <section className="relative z-10 min-h-screen flex items-center justify-center text-center px-6">
+    <section className="relative mt-12 z-10 min-h-screen flex items-center justify-center text-center px-6">
       <div className="max-w-4xl">
         <h1 className="text-5xl md:text-7xl font-extrabold text-pink-600 mb-6 drop-shadow-xl">
           Aprenda o Alfabeto em
