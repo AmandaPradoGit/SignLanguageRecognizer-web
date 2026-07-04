@@ -6,10 +6,11 @@ interface LevelCardProps {
   level: number;
   title: string;
   description: string;
+  letters: string;
   color: string;
 }
 
-export default function LevelCard({ level, title, description, color }: LevelCardProps) {
+export default function LevelCard({ level, title, description, letters, color }: LevelCardProps) {
   return (
     <Link href={`/levels/${level}`}>
       <div
@@ -32,6 +33,9 @@ export default function LevelCard({ level, title, description, color }: LevelCar
         </h3>
         <p className="text-sm text-gray-100 drop-shadow-md">
           {description}
+        </p>
+        <p className="text-sm text-gray-100 drop-shadow-md">
+          {letters}
         </p>
       </div>
     </Link>

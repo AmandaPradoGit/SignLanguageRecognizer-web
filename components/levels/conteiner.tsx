@@ -6,32 +6,35 @@ export default function LevelsContainer() {
   const levels = [
     {
       level: 1,
-      title: 'Vogais',
-      description: 'Aprenda as vogais em libras',
+      title: 'As Vogais',
+      description: 'Aprenda a base do alfabeto com formatos simples e estáticos.',
+      letters: 'Letras: A, E, I, O, U.',
       color: 'bg-pink-500',
     },
     {
       level: 2,
-      title: 'Consoantes - Básico',
-      description: 'Aprenda consoantes simples e estáticas',
+      title: 'Sinais Firmes',
+      description: 'Expanda seu vocabulário com as consoantes estáticas.',
+      letters: 'Letras: B, C, L, M, N, S, V, W.',
       color: 'bg-yellow-500',
     },
     {
       level: 3,
-      title: 'Consoantes - Intermediário',
-      description: 'Aprenda consoantes ',
+      title: 'Desafio Dinâmico',
+      description: 'Domine letras com movimentos, giros e alta coordenação.',
+      letters: 'Letras: D, F, G, H, J, K, P, Q, R, T, X, Y, Z.',
       color: 'bg-blue-500',
     },
     {
       level: 4,
-      title: 'Avançado',
-      description: 'Conversas complexas e nuances da língua',
+      title: 'Soletração',
+      description: 'Pratique a dactilologia juntando as letras para formar palavras.',
       color: 'bg-orange-500',
     },
     {
       level: 5,
-      title: 'Expert',
-      description: 'Domine completamente a Libras',
+      title: 'Modo Livre',
+      description: 'Treine no seu próprio ritmo e faça o sinal que quiser.',
       color: 'bg-purple-500',
     },
   ];
@@ -45,6 +48,7 @@ export default function LevelsContainer() {
             level={levelData.level}
             title={levelData.title}
             description={levelData.description}
+            letters={levelData.letters}
             color={levelData.color}
           />
         ))}
