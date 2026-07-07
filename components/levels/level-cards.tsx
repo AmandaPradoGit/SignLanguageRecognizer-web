@@ -19,10 +19,10 @@ export default function LevelCard({ level, title, description, letters, color }:
           rounded-lg p-6 cursor-pointer
           transform transition-all duration-300
           hover:scale-105 hover:shadow-2xl
-          border-2 border-opacity-50 border-white
+          border-2 border-opacity-50 
           backdrop-blur-sm bg-opacity-10
-          flex flex-col items-center justify-center
-          min-h-48 text-center
+          flex flex-col justify-center
+          h-98
         `}
       >
         <div className="text-5xl font-bold mb-3 text-white drop-shadow-lg">
@@ -34,7 +34,7 @@ export default function LevelCard({ level, title, description, letters, color }:
         <p className="text-sm text-gray-100 drop-shadow-md">
           {description}
         </p>
-        <p className="text-sm text-gray-100 drop-shadow-md">
+        <p className="text-md text-gray-100 font-extrabold drop-shadow-md">
           {letters}
         </p>
       </div>
