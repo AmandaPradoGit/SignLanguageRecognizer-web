@@ -16,7 +16,7 @@ export default function LevelsContainer() {
       title: 'Sinais Firmes',
       description: 'Expanda seu vocabulário com as consoantes estáticas.',
       letters: 'Letras: B, C, L, M, N, S, V, W.',
-      color: 'bg-yellow-500',
+      color: '#dcc604',
     },
     {
       level: 3,

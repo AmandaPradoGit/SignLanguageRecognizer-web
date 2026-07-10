@@ -1,0 +1,82 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import HandTracker from './HandTracker';
+
+interface Props {
+  level: string;
+}
+
+const LEVEL_DATA: Record<
+  string,
+  { letters: string[]; colorHex: string; description: string }
+> = {
+  '1': {
+    letters: ['A', 'E', 'I', 'O', 'U'],
+    colorHex: '#ec4899',
+    description: 'Letras básicas A, E, I, O, U',
+  },
+  '2': {
+    letters: ['B', 'C', 'L', 'M', 'N', 'S', 'V', 'W'],
+    colorHex: '#dcc604',
+    description: 'Letras intermédias B, C, L, M, N, S, V, W',
+  },
+  '3': {
+    letters: ['D', 'F', 'G', 'H', 'J', 'K', 'P', 'Q', 'R', 'T', 'X', 'Y', 'Z'],
+    colorHex: '#3b82f6',
+    description: 'Letras avançadas D, F, G, H, J, K, P, Q, R, T, X, Y, Z',
+  },
+};
+
+function getRandomLetter(arr: string[]) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export default function LevelScreen({ level }: Props) {
+  const data = LEVEL_DATA[level] || LEVEL_DATA['1'];
+  const letters = data.letters;
+  const [current, setCurrent] = useState<string>('');
+
+  const next = () => setCurrent(getRandomLetter(letters));
+
+  const handleHandsResults = (results: any) => {
+    if (!results.multiHandLandmarks) return;
+    // Aqui você pode enviar landmarks para a API de reconhecimento.
+    // Exemplo:
+    // fetch('/api/recognition', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ landmarks: results.multiHandLandmarks }),
+    // });
+  };
+
+  // Set a random current letter on client mount and whenever the level changes.
+  // Compute data inside the effect to avoid stale closures.
+  useEffect(() => {
+    const currentData = LEVEL_DATA[level] || LEVEL_DATA['1'];
+    setCurrent(getRandomLetter(currentData.letters));
+  }, [level]);
+
+  return (
+    <div className="flex h-screen flex-row-reverse">
+      <div className="w-1/2 bg-black flex items-center justify-center">
+        <HandTracker onResults={handleHandsResults} />
+      </div>
+      <div
+        className={`w-1/2 text-white p-8 flex flex-col items-center justify-center space-y-6`}
+        style={{ backgroundColor: data.colorHex }}
+      >
+        <div className="text-xl opacity-90">Nível {level}</div>
+        <div className="text-sm opacity-90">{data.description}</div>
+        <div className="text-9xl font-extrabold drop-shadow-lg">{current}</div>
+
+        <div className="flex gap-4">
+          <button onClick={next} className="px-4 py-2 bg-black/30 rounded-md">Próxima letra</button>
+          <button onClick={() => setCurrent(getRandomLetter(letters))} className="px-4 py-2 bg-black/30 rounded-md">Aleatória</button>
+        </div>
+
+        <div className="text-sm opacity-90">Letras do nível: {letters.join(', ')}</div>
+      </div>
+    </div>
+  );
+}

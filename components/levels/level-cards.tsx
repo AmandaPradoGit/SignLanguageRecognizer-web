@@ -6,24 +6,28 @@ interface LevelCardProps {
   level: number;
   title: string;
   description: string;
-  letters: string;
+  letters?: string;
   color: string;
 }
 
 export default function LevelCard({ level, title, description, letters, color }: LevelCardProps) {
+  const isHexColor = color.startsWith('#') || color.startsWith('rgb');
+  const style = isHexColor ? { backgroundColor: color } : undefined;
+
   return (
     <Link href={`/levels/${level}`}>
       <div
         className={`
-          ${color}
+          ${isHexColor ? '' : color}
           rounded-lg p-6 cursor-pointer
           transform transition-all duration-300
           hover:scale-105 hover:shadow-2xl
           border-2 border-opacity-50 
           backdrop-blur-sm bg-opacity-10
-          flex flex-col justify-center
+          flex flex-col pt-16
           h-98
         `}
+        style={style}
       >
         <div className="text-5xl font-bold mb-3 text-white drop-shadow-lg">
           {level}
@@ -35,7 +39,7 @@ export default function LevelCard({ level, title, description, letters, color }:
           {description}
         </p>
         <p className="text-md text-gray-100 font-extrabold drop-shadow-md">
-          {letters}
+          {letters ?? ''}
         </p>
       </div>
     </Link>
