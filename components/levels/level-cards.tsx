@@ -25,7 +25,7 @@ export default function LevelCard({ level, title, description, letters, color }:
           border-2 border-opacity-50 
           backdrop-blur-sm bg-opacity-10
           flex flex-col pt-16
-          h-98
+          h-98p
         `}
         style={style}
       >
