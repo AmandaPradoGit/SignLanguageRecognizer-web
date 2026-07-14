@@ -86,12 +86,30 @@ export default function HandTracker({ onResults }: HandTrackerProps) {
       });
 
       handsInstance.onResults((results: any) => {
-        canvasElement.width = videoElement.videoWidth;
+        canvasElement.width = videoElement.videoWidth / 2; // Metade da largura
         canvasElement.height = videoElement.videoHeight;
 
         canvasCtx.save();
         canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+        
+        // Aplicar filtro p&b com exposição reduzida
+        canvasCtx.filter = 'grayscale(100%) brightness(0.5) contrast(1.2)';
+        
+        // Desenhar apenas a metade direita do frame
+        canvasCtx.drawImage(
+          results.image,
+          videoElement.videoWidth / 2, // Começar do meio (metade direita)
+          0,
+          videoElement.videoWidth / 2, // Largura da metade direita
+          videoElement.videoHeight,
+          0,
+          0,
+          canvasElement.width,
+          canvasElement.height
+        );
+        
+        // Remover filtro para desenhar os landmarks com cor
+        canvasCtx.filter = 'none';
 
         if (results.multiHandLandmarks) {
           // Conexões de mão do MediaPipe
@@ -111,9 +129,10 @@ export default function HandTracker({ onResults }: HandTrackerProps) {
               const startLandmark = landmarks[start];
               const endLandmark = landmarks[end];
               if (startLandmark && endLandmark) {
-                const x1 = startLandmark.x * canvasElement.width;
+                // Ajustar coordenadas para a metade direita
+                const x1 = (startLandmark.x * videoElement.videoWidth - videoElement.videoWidth / 2) * (canvasElement.width / (videoElement.videoWidth / 2));
                 const y1 = startLandmark.y * canvasElement.height;
-                const x2 = endLandmark.x * canvasElement.width;
+                const x2 = (endLandmark.x * videoElement.videoWidth - videoElement.videoWidth / 2) * (canvasElement.width / (videoElement.videoWidth / 2));
                 const y2 = endLandmark.y * canvasElement.height;
                 canvasCtx.beginPath();
                 canvasCtx.moveTo(x1, y1);
@@ -126,7 +145,8 @@ export default function HandTracker({ onResults }: HandTrackerProps) {
             canvasCtx.fillStyle = '#a855f7';
             canvasCtx.strokeStyle = '#a855f7';
             for (const landmark of landmarks) {
-              const x = landmark.x * canvasElement.width;
+              // Ajustar coordenadas para a metade direita
+              const x = (landmark.x * videoElement.videoWidth - videoElement.videoWidth / 2) * (canvasElement.width / (videoElement.videoWidth / 2));
               const y = landmark.y * canvasElement.height;
               canvasCtx.beginPath();
               canvasCtx.arc(x, y, 3, 0, Math.PI * 2);
@@ -143,7 +163,7 @@ export default function HandTracker({ onResults }: HandTrackerProps) {
         onFrame: async () => {
           await handsInstance.send({ image: videoElement });
         },
-        width: 640,
+        width: 1280, // Aumentar para capturar melhor a mão
         height: 480,
       });
 
