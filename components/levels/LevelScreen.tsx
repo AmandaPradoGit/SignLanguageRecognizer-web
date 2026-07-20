@@ -52,8 +52,7 @@ export default function LevelScreen({ level }: Props) {
   const next = () => setCurrent(getRandomLetter(letters));
 
   const handleHandsResults = async (results: any) => {
-    if (!isFreeMode) return;
-
+    // Se não detectou mãos, resetar buffer e status
     if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
       bufferPredicoes.current = [];
       setPredicao('Aguardando detecção...');
@@ -88,8 +87,31 @@ export default function LevelScreen({ level }: Props) {
 
         const predicaoEstavel = Object.entries(contagem).sort((a, b) => b[1] - a[1])[0]?.[0];
         if (predicaoEstavel) {
-          setPredicao(predicaoEstavel);
-          setStatus('Predição recebida do backend.');
+          // Normalizar predição: extrair primeira letra A-Z (caso o backend retorne frases/ruído)
+          const apenasLetras = (predicaoEstavel || '').toUpperCase().replace(/[^A-Z]/g, '');
+          const letraRecebida = apenasLetras ? apenasLetras[0] : '';
+          setPredicao(letraRecebida || predicaoEstavel);
+
+          // Comportamento para modo livre (mostrar predição) e para níveis com letra alvo (verificar)
+          if (isFreeMode) {
+            setStatus('Predição recebida do backend.');
+          } else {
+            // Comparar de forma case-insensitive
+            const esperado = (current || '').toUpperCase();
+            const recebido = letraRecebida;
+            if (esperado && recebido && recebido === esperado) {
+              setStatus('Correto!');
+              // limpar buffer e avançar para próxima letra após pequena pausa
+              bufferPredicoes.current = [];
+              setTimeout(() => {
+                setCurrent(getRandomLetter(letters));
+                setPredicao('Aguardando detecção...');
+                setStatus('Próxima letra.');
+              }, 900);
+            } else {
+              setStatus('Tente novamente.');
+            }
+          }
         }
       } else if (response.erro) {
         setStatus(response.erro);
